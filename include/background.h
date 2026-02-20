@@ -123,6 +123,11 @@ struct background
   enum varconst_dependence varconst_dep; /**< dependence of the varying fundamental constants as a function of time */
   double varconst_transition_redshift; /**< redshift of transition between varied fundamental constants and normal fundamental constants in the 'varconst_instant' case*/
 
+  // DC: Self-interacting neutrinos
+  double log10_G_eff_nu; /**< Log10 of the effective coupling constant for interaction of neutrinos*/
+  double G_eff_nu; /**< Effective coupling constant for interaction of neutrinos*/
+  double interacting_nu; /**< Define whether neutrinos are interacting or not*/
+
   //@}
 
 
@@ -185,6 +190,10 @@ struct background
   int index_bg_rho_ncdm1;     /**< density of first ncdm species (others contiguous) */
   int index_bg_p_ncdm1;       /**< pressure of first ncdm species (others contiguous) */
   int index_bg_pseudo_p_ncdm1;/**< another statistical momentum useful in ncdma approximation */
+
+  // DC: Self-interacting neutrinos
+  int index_bg_Gamma_ur;      /**< Interaction rate of relativistic neutrinos/relics */
+  int index_bg_Gamma_ncdm1;   /**< Interaction rate of first ncdm species (others contiguous) */
 
   int index_bg_rho_tot;       /**< Total density */
   int index_bg_p_tot;         /**< Total pressure */

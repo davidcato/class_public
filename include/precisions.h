@@ -397,6 +397,33 @@ class_precision_parameter(neglect_CMB_sources_below_visibility,double,1.0e-3)
  */
 class_type_parameter(evolver,int,enum evolver_type,ndf15)
 
+// DC: Self-interacting neutrinos block
+class_precision_parameter(start_small_k_at_tau_nu_over_tau_h,double,2.e-5)  /**< largest wavelengths start being sampled when universe is sufficiently opaque. This is quantified in terms of the ratio of thermo to hubble time scales, \f$ \tau_c/\tau_H \f$. Start when start_largek_at_tau_c_over_tau_h equals this ratio. Decrease this value to start integrating the wavenumbers earlier in time. */
+
+/**
+ * when to switch off tight-coupling approximation for interacting neutrinos:
+ * first condition: \f$ \tau_nu/\tau_H \f$ > tight_coupling_trigger_tau_nu_over_tau_h.
+ * Decrease this value to switch off earlier in time. 
+ */
+class_precision_parameter(tight_coupling_trigger_tau_nu_over_tau_h,double,0.001)
+/**
+ * when to switch off tight-coupling approximation for interacting neutrinos:
+ * second condition: \f$ \tau_nu/\tau_k \equiv k \tau_c \f$ > 
+ * tight_coupling_trigger_tau_nu_over_tau_k.
+ * Decrease this value to switch off earlier in time.
+ */
+class_precision_parameter(tight_coupling_trigger_tau_nu_over_tau_k,double,0.001)
+/**
+ * when to switch off full hierarchy for interacting neutrinos:
+ * second condition: \f$ \tau_nu/\tau_k \equiv k \tau_c \f$ > 
+ * full_hierarchy_trigger_tau_nu_over_tau_k.
+ * Decrease this value to switch off earlier in time.
+ */
+class_precision_parameter(full_hierarchy_trigger_tau_nu_over_tau_k,double,1.e4)
+
+class_string_parameter(interacting_C_ell_file,"/neutrinos_collision_terms/Coll_integrals_5_qbins.dat","interacting_C_ell_file")
+class_string_parameter(interacting_alpha_ell_file,"/neutrinos_collision_terms/Massless_alpha_l.dat","interacting_alpha_ell_file")
+
 /*
  * Primordial parameters
  */

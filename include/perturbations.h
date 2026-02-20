@@ -14,6 +14,7 @@
 /**
  * flags for various approximation schemes
  * (tca = tight-coupling approximation,
+ *  nu_tca = self-interacting neutrino tight-coupling approximation,
  *  rsa = radiation streaming approximation,
  *  ufa = massless neutrinos / ultra-relativistic relics fluid approximation)
  *
@@ -30,6 +31,7 @@ enum tca_idm_dr_flags {tca_idm_dr_on, tca_idm_dr_off};
 enum rsa_idr_flags {rsa_idr_off, rsa_idr_on};
 enum ufa_flags {ufa_off, ufa_on};
 enum ncdmfa_flags {ncdmfa_off, ncdmfa_on};
+enum nu_tca_flags {nu_tca_on, nu_tca_off};
 
 //@}
 
@@ -201,6 +203,24 @@ struct perturbations
   short has_matter_source_in_current_gauge; /**< whether to keep matter and baryon+CDM sources in current gauge, instead of automatic conversion to gauge-invariant variables */
 
   short get_perturbations_in_current_gauge; /**< whether to keep the output table of perturbations (controlled by 'store_perturbations' and 'k_output_values') in current gauge, instead of automatic conversion to Newtonian gauge */
+
+  //@}
+
+  // DC: Self-interacting neutrinos
+  /** @name - whether to include ufa (ncdmfa) corrections within Boltzmann hierarchy */
+
+  //@{
+
+  short ufa_corrections;
+  short ncdmfa_corrections;
+  int num_q_collision;
+  int * ell;
+  double * q_collision;
+  double * C_ell;
+  double * ddC_ell;
+
+  int * ell_2;
+  double * alpha_ell;
 
   //@}
 
@@ -609,6 +629,10 @@ struct perturbations_workspace
   double S_fld;                /**< S quantity sourcing Gamma_prime evolution in PPF scheme (equivalent to eq. 15 in 0808.3125) */
   double Gamma_prime_fld;      /**< Gamma_prime in PPF scheme (equivalent to eq. 14 in 0808.3125) */
 
+  // DC: self-interacting neutrinos
+  double tca_shear_ur;    /**< ur in neutrino tight-coupling approximation */
+  double ** tca_psi2_ncdm1;  /**< ncdm in neutrino tight-coupling approximation */
+
   FILE * perturbations_output_file; /**< filepointer to output file*/
   int index_ikout;            /**< index for output k value (when k_output_values is set) */
 
@@ -630,6 +654,7 @@ struct perturbations_workspace
   //@{
 
   int index_ap_tca; /**< index for tight-coupling approximation */
+  int index_ap_nu_tca; /**< interacting neutrinos approximation */
   int index_ap_rsa; /**< index for radiation streaming approximation */
   int index_ap_tca_idm_dr; /**< index for dark tight-coupling approximation (idm-idr) */
   int index_ap_rsa_idr; /**< index for dark radiation streaming approximation */
@@ -796,6 +821,8 @@ extern "C" {
                                    struct perturbations_workspace * ppw
                                    );
 
+  // DC: Comeback
+  // For some unknown reason I added background structure here, however this seems unncessary.
   int perturbations_workspace_free(
                                    struct perturbations * ppt,
                                    int index_md,
@@ -974,6 +1001,28 @@ extern "C" {
                                             struct perturbations_workspace * ppw,
                                             ErrorMsg error_message
                                             );
+
+  // DC: Self-interacting neutrinos
+  int perturbations_ur_tca_shear(
+                                 double * y,
+                                 void * parameters_and_workspace,
+                                 ErrorMsg error_message
+                                 );
+
+  int perturbations_ncdm_tca_shear(
+                                 double * y,
+                                 void * parameters_and_workspace,
+                                 ErrorMsg error_message
+                                 );
+
+  int perturbations_collision_C_ell(struct precision * ppr,
+                                    struct perturbations * ppt);
+
+  int perturbations_collision_alpha_ell(struct precision * ppr,
+                                        struct perturbations * ppt);
+
+  int perturbations_collision_free(struct perturbations * ppt);
+  //
 
 #ifdef __cplusplus
 }
