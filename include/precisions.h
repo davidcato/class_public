@@ -421,8 +421,8 @@ class_precision_parameter(tight_coupling_trigger_tau_nu_over_tau_k,double,0.001)
  */
 class_precision_parameter(full_hierarchy_trigger_tau_nu_over_tau_k,double,1.e4)
 
-class_string_parameter(interacting_C_ell_file,"/neutrinos_collision_terms/Coll_integrals_5_qbins.dat","interacting_C_ell_file")
-class_string_parameter(interacting_alpha_ell_file,"/neutrinos_collision_terms/Massless_alpha_l.dat","interacting_alpha_ell_file")
+class_string_parameter(interacting_C_ell_file,"neutrinos_collision_terms/Coll_integrals_5_qbins.dat","interacting_C_ell_file")
+class_string_parameter(interacting_alpha_ell_file,"neutrinos_collision_terms/Massless_alpha_l.dat","interacting_alpha_ell_file")
 
 /*
  * Primordial parameters

@@ -126,7 +126,7 @@ struct background
   // DC: Self-interacting neutrinos
   double log10_G_eff_nu; /**< Log10 of the effective coupling constant for interaction of neutrinos*/
   double G_eff_nu; /**< Effective coupling constant for interaction of neutrinos*/
-  double interacting_nu; /**< Define whether neutrinos are interacting or not*/
+  short has_interacting_nu; /**< Define whether neutrinos are interacting or not*/
 
   //@}
 

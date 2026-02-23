@@ -207,7 +207,7 @@ struct perturbations
   //@}
 
   // DC: Self-interacting neutrinos
-  /** @name - whether to include ufa (ncdmfa) corrections within Boltzmann hierarchy */
+  /** @name - whether to include ufa (ncdmfa) corrections within Boltzmann hierarchy and other */
 
   //@{
 
@@ -221,6 +221,8 @@ struct perturbations
 
   int * ell_2;
   double * alpha_ell;
+
+  short has_sinu; /**< whether the arrays related to interaction files have been allocated */
 
   //@}
 
@@ -1021,7 +1023,7 @@ extern "C" {
   int perturbations_collision_alpha_ell(struct precision * ppr,
                                         struct perturbations * ppt);
 
-  int perturbations_collision_free(struct perturbations * ppt);
+  // int perturbations_collision_free(struct perturbations * ppt);
   //
 
 #ifdef __cplusplus

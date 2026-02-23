@@ -526,6 +526,16 @@ int background_functions(
       /* (rho_ncdm1 - 3 p_ncdm1) is the "non-relativistic" contribution
          to rho_ncdm1 */
       rho_m += rho_ncdm - 3.* p_ncdm;
+
+      // DC: HERE!
+      /* Interaction rate for massive neutrinos */
+      if(pba->has_interacting_nu == _TRUE_) {
+        // G_eff_nu in 1/MeV^2
+        // _Mpc_over_m*_eV_/(_h_P_*_c_) convert eV/Mpc
+        // index_bg_Gamma_ncdm1 in 1/Mpc to make easy the comparison with H
+        pvecback[pba->index_bg_Gamma_ncdm1+n_ncdm] = a*pow(pba->G_eff_nu*1e-12,2)*pow(pba->T_cmb*pba->T_ncdm[n_ncdm]*_k_B_/_eV_/a,5)*_Mpc_over_m_*_eV_/(_h_P_*_c_);
+        // printf("%e\n",pvecback[pba->index_bg_Gamma_ncdm1+n_ncdm]*pow(a_rel,4));
+      }
     }
   }
 
@@ -562,6 +572,12 @@ int background_functions(
     p_tot += (1./3.) * pvecback[pba->index_bg_rho_ur];
     dp_dloga += -(4./3.) * pvecback[pba->index_bg_rho_ur];
     rho_r += pvecback[pba->index_bg_rho_ur];
+
+    // DC: HERE!
+    /* Interaction rate for massless neutrinos */
+    if(pba->has_interacting_nu == _TRUE_) {
+      pvecback[pba->index_bg_Gamma_ur] = a*pow(pba->G_eff_nu*1e-12,2)*pow(pba->T_cmb*pow(4./11.,1./3.)*_k_B_/_eV_/a,5)*_Mpc_over_m_*_eV_/(_h_P_*_c_);
+    }
   }
 
   /* interacting dark radiation */
@@ -1056,6 +1072,10 @@ int background_indices(
   class_define_index(pba->index_bg_rho_ncdm1,pba->has_ncdm,index_bg,pba->N_ncdm);
   class_define_index(pba->index_bg_p_ncdm1,pba->has_ncdm,index_bg,pba->N_ncdm);
   class_define_index(pba->index_bg_pseudo_p_ncdm1,pba->has_ncdm,index_bg,pba->N_ncdm);
+  // DC: Self-interacting neutrinos
+  if (pba->has_interacting_nu == _TRUE_) {
+    class_define_index(pba->index_bg_Gamma_ncdm1,pba->has_ncdm,index_bg,pba->N_ncdm);
+  }
 
   /* - index for dcdm */
   class_define_index(pba->index_bg_rho_dcdm,pba->has_dcdm,index_bg,1);
@@ -1082,6 +1102,10 @@ int background_indices(
 
   /* - index for ultra-relativistic neutrinos/species */
   class_define_index(pba->index_bg_rho_ur,pba->has_ur,index_bg,1);
+  // DC: Self-interacting neutrinos
+  if (pba->has_interacting_nu == _TRUE_) {
+    class_define_index(pba->index_bg_Gamma_ur,pba->has_ur,index_bg,1);
+  }
 
   /* - index for total density */
   class_define_index(pba->index_bg_rho_tot,_TRUE_,index_bg,1);
@@ -1801,6 +1825,10 @@ int background_checks(
   /** - in verbose mode, send to standard output some additional information on non-obvious background parameters */
   if (pba->background_verbose > 0) {
 
+    if (pba->has_interacting_nu == _TRUE_) {
+      printf(" -> interacting neutrino species has interaction strengh log10_Geff = %e \n",pba->log10_G_eff_nu);
+    }
+
     if (pba->has_ncdm == _TRUE_) {
 
       /* loop over ncdm species */
@@ -2480,6 +2508,11 @@ int background_output_titles(
   class_store_columntitle(titles,"rel. alpha",pba->has_varconst);
   class_store_columntitle(titles,"rel. m_e",pba->has_varconst);
 
+  if (pba->has_interacting_nu == _TRUE_) {
+    class_store_columntitle(titles,"Gamma_ur",pba->has_ur);
+    class_store_columntitle(titles,"Gamma_ncdm",pba->has_ncdm);
+  }
+
   return _SUCCESS_;
 }
 
@@ -2555,6 +2588,12 @@ int background_output_data(
 
     class_store_double(dataptr,pvecback[pba->index_bg_varc_alpha],pba->has_varconst,storeidx);
     class_store_double(dataptr,pvecback[pba->index_bg_varc_me],pba->has_varconst,storeidx);
+
+  if (pba->has_interacting_nu == _TRUE_) {
+      class_store_double(dataptr,pvecback[pba->index_bg_Gamma_ur],pba->has_ur,storeidx);
+      class_store_double(dataptr,pvecback[pba->index_bg_Gamma_ncdm1],pba->has_ncdm,storeidx);
+    }
+
   }
 
   return _SUCCESS_;

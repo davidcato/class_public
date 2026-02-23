@@ -2485,6 +2485,26 @@ int input_read_parameters_species(struct file_content * pfc,
     ppt->three_cvis2_ur = 3.*param2;
   }
 
+  // DC
+  /** 3.b) Case of self-interactions */
+  /* Read */
+  class_call(parser_read_double(pfc,"log10_G_eff_nu",&param1,&flag1,errmsg),                          
+              errmsg,
+              errmsg);
+  
+  // DC: Minimum threshold for LCDM limit. Excessively low values could produce numerical issues.
+  // DC: Older version also reads precision parameters here. Skipping that for now.
+  if (flag1 == _TRUE_){
+    if (param1 < -7.){
+      pba->has_interacting_nu = _FALSE_;
+      pba->G_eff_nu = 0.;
+    }
+    else{
+      pba->has_interacting_nu = _TRUE_;
+      pba->log10_G_eff_nu = param1;
+      pba->G_eff_nu = pow(10.,pba->log10_G_eff_nu);
+    }
+  }
 
   /** 4) Omega_0_cdm (CDM) */
   /* Read */
@@ -5828,6 +5848,14 @@ int input_default_params(struct background *pba,
   /** 3.a) Effective squared sound speed and viscosity parameter */
   ppt->three_ceff2_ur=1.;
   ppt->three_cvis2_ur=1.;
+
+  // DC
+  /** 3.b) Self-interacting neutrinos strength and logical parameters. Also including logical parameters for fluid-approximation corrections */
+  pba->has_interacting_nu=_FALSE_;
+  pba->log10_G_eff_nu = -15.;
+  pba->G_eff_nu = 0.;
+  ppt->ufa_corrections = 1;
+  ppt->ncdmfa_corrections = 1;
 
   /** 4) CDM density */
   pba->Omega0_cdm = 0.1201075/pow(pba->h,2);
