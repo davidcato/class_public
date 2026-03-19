@@ -11604,10 +11604,14 @@ int perturbations_collision_C_ell(struct precision * ppr,
   //   class_open(fA,ppr->interacting_C_ell_file_new, "r",ppt->error_message);
   //   printf("Using file: %s (11 bins in momentum space)\n",ppr->interacting_C_ell_file_new);
   // }
-  if (ppt->gauge == synchronous){
-    class_open(fA,ppr->interacting_C_ell_file, "r",ppt->error_message);
-    printf("Using file: %s (5 bins in momentum space)\n",ppr->interacting_C_ell_file);
-  }
+  // if (ppt->gauge == synchronous){
+  //   class_open(fA,ppr->interacting_C_ell_file, "r",ppt->error_message);
+  //   printf("Using file: %s (5 bins in momentum space)\n",ppr->interacting_C_ell_file);
+  // }
+
+  FileName c_ell_in_path;
+  class_sprintf(c_ell_in_path,"%s%s",ppr->base_path,ppr->interacting_C_ell_file);
+  class_open(fA,c_ell_in_path, "r",ppt->error_message);
 
   /* go through each line */
   while (fgets(line,_LINE_LENGTH_MAX_-1,fA) != NULL) {
@@ -11639,7 +11643,8 @@ int perturbations_collision_C_ell(struct precision * ppr,
         if (ppt->gauge == synchronous){
           class_test(sscanf(line,"%d %d",&num_q,&num_ell) != 2,
                      ppt->error_message,
-                     "could not read value of parameters (num_q,num_ell) in file %s\n",ppr->interacting_C_ell_file);
+                     // "could not read value of parameters (num_q,num_ell) in file %s\n",ppr->interacting_C_ell_file);
+                     "could not read value of parameters (num_q,num_ell) in file %s\n",c_ell_in_path);
         }
 
         class_alloc(ppt->q_collision,num_q*sizeof(double),ppt->error_message);
@@ -11670,7 +11675,8 @@ int perturbations_collision_C_ell(struct precision * ppr,
                             &(ppt->C_ell[array_line])
                             ) != 3,
                      ppt->error_message,
-                     "could not read value of parameters (q_collision,ell,C_ell) in file %s\n",ppr->interacting_C_ell_file);
+                     // "could not read value of parameters (q_collision,ell,C_ell) in file %s\n",ppr->interacting_C_ell_file);
+                     "could not read value of parameters (q_collision,ell,C_ell) in file %s\n",c_ell_in_path);
         }
         array_line ++;
       }
@@ -11704,7 +11710,9 @@ int perturbations_collision_alpha_ell(struct precision * ppr,
 
   /**Summary: */
 
-  class_open(fA,ppr->interacting_alpha_ell_file, "r",ppt->error_message);
+  FileName alpha_ell_in_path;
+  class_sprintf(alpha_ell_in_path,"%s%s",ppr->base_path,ppr->interacting_alpha_ell_file);
+  class_open(fA,alpha_ell_in_path, "r",ppt->error_message);
 
   /* go through each line */
   while (fgets(line,_LINE_LENGTH_MAX_-1,fA) != NULL) {
@@ -11730,7 +11738,8 @@ int perturbations_collision_alpha_ell(struct precision * ppr,
         /* read (num_q, num_ell), infer size of arrays and allocate them */
         class_test(sscanf(line,"%d",&num_ell) != 1,
                    ppt->error_message,
-                   "could not read value of parameters (num_ell) in file %s\n",ppr->interacting_alpha_ell_file);
+                   // "could not read value of parameters (num_ell) in file %s\n",ppr->interacting_alpha_ell_file);
+                   "could not read value of parameters (num_ell) in file %s\n",alpha_ell_in_path);
 
         class_alloc(ppt->ell_2,num_ell*sizeof(double),ppt->error_message);
         class_alloc(ppt->alpha_ell,num_ell*sizeof(double),ppt->error_message);
@@ -11744,7 +11753,8 @@ int perturbations_collision_alpha_ell(struct precision * ppr,
                           &(ppt->alpha_ell[array_line])
                           ) != 2,
                    ppt->error_message,
-                   "could not read value of parameters (,ell,alpha_ell) in file %s\n",ppr->interacting_alpha_ell_file);
+                   // "could not read value of parameters (,ell,alpha_ell) in file %s\n",ppr->interacting_alpha_ell_file);
+                   "could not read value of parameters (,ell,alpha_ell) in file %s\n",alpha_ell_in_path);
         array_line ++;
       }
     

@@ -61,8 +61,9 @@ HMCODE = external/HMcode
 ########################################################
 
 # pass current working directory to the code
-CLASSDIR ?= $(MDIR)
-CCFLAG += -D__CLASSDIR__='"$(CLASSDIR)"'
+# CLASSDIR ?= $(MDIR)
+# CCFLAG += -D__CLASSDIR__='"$(CLASSDIR)"'
+CCFLAG += -D__CLASSDIR__='"$(MDIR)"'
 
 # where to find include files *.h
 INCLUDES = -I../include

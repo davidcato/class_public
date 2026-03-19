@@ -104,7 +104,7 @@ class classy_builder(build_ext):
       path_install = binaries_directory()
       print("Selected corresponding installation path : ", path_install)
 
-      env['CLASSDIR'] = path_install
+      # env['CLASSDIR'] = path_install
 
       # Compile the C code only
       returncode = sbp.call(["make","libclass.a","-j"], env=env)
