@@ -39,8 +39,9 @@ int thermodynamics_hyrec_init(struct precision* ppr, struct background * pba, st
   }
 
   /** - pass the path to the hyrec files */
-  class_sprintf(phy->path_to_hyrec,"%s%s",ppr->base_path,ppr->hyrec_path);
-  phy->data->path_to_hyrec = phy->path_to_hyrec; // Just a pointer assignment
+  // class_sprintf(phy->path_to_hyrec,"%s%s",ppr->base_path,ppr->hyrec_path);
+  // phy->data->path_to_hyrec = phy->path_to_hyrec; // Just a pointer assignment
+  phy->data->path_to_hyrec = ppr->hyrec_path;
   /** - allocate hyrec internally */
   hyrec_allocate(phy->data, phy->zstart, phy->zend);
   /* Error during allocation */

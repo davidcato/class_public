@@ -15,7 +15,8 @@
 
 #define _MAX_DETECTOR_NAME_LENGTH_ 100
 typedef char DetectorName[_MAX_DETECTOR_NAME_LENGTH_];
-typedef char DetectorFileName[_FILENAMESIZE_+_BASEPATHSIZE_+_MAX_DETECTOR_NAME_LENGTH_+256];
+// typedef char DetectorFileName[_FILENAMESIZE_+_BASEPATHSIZE_+_MAX_DETECTOR_NAME_LENGTH_+256];
+typedef char DetectorFileName[_FILENAMESIZE_+_MAX_DETECTOR_NAME_LENGTH_+256];
 
 /** List of possible branching ratio approximations */
 
@@ -91,7 +92,8 @@ struct distortions
   double DI_units;                           /**< Conversion from unitless DI to DI[10^26 W m^-2 Hz^-1 sr^-1] */
 
   /* File names for the PCA */
-  char sd_detector_noise_file[2*_FILENAMESIZE_+_BASEPATHSIZE_+_MAX_DETECTOR_NAME_LENGTH_+512];              /**< Full path of detector noise file */
+  // char sd_detector_noise_file[2*_FILENAMESIZE_+_BASEPATHSIZE_+_MAX_DETECTOR_NAME_LENGTH_+512];              /**< Full path of detector noise file */
+  char sd_detector_noise_file[2*_FILENAMESIZE_+_MAX_DETECTOR_NAME_LENGTH_+512];              /**< Full path of detector noise file */
   DetectorFileName sd_PCA_file_generator;               /**< Full path of PCA generator file */
   DetectorFileName sd_detector_list_file;               /**< Full path of detector list file */
 

@@ -108,7 +108,7 @@ class_precision_parameter(M_nfsm_threshold,double,1.e4)
  * Big Bang Nucleosynthesis file path. The file specifies the predictions for
  * \f$ Y_\mathrm{He} \f$ for given \f$ \omega_b \f$ and \f$ N_\mathrm{eff} \f$.
  */
-class_string_parameter(sBBN_file,"/external/bbn/sBBN_2025.dat","sBBN file")
+class_string_parameter(sBBN_file,"external/bbn/sBBN_2025.dat","sBBN file")
 
 /*
  *  Thermodynamical quantities
@@ -223,7 +223,7 @@ class_precision_parameter(recfast_z_switch_late,double,800.)
  * Hyrec Parameters
  */
 
-class_string_parameter(hyrec_path,"/external/HyRec2020/","hyrec_path") /**< Path to hyrec */
+class_string_parameter(hyrec_path,"external/HyRec2020/","hyrec_path") /**< Path to hyrec */
 
 /*
  * Reionization parameters
@@ -238,7 +238,7 @@ class_precision_parameter(reionization_start_factor,double,8.0) /**< Searching o
  * Heating parameters
  */
 
-class_string_parameter(chi_z_Galli,"/external/heating/Galli_et_al_2013.dat","Galli_file") /**< File containing the chi approximation according to Galli et al 2013 */
+class_string_parameter(chi_z_Galli,"external/heating/Galli_et_al_2013.dat","Galli_file") /**< File containing the chi approximation according to Galli et al 2013 */
 class_precision_parameter(z_start_chi_approx,double,2.0e3) /**< Switching redshift from full heating to chosen approx for deposition function */
 
 /*
@@ -421,8 +421,8 @@ class_precision_parameter(tight_coupling_trigger_tau_nu_over_tau_k,double,0.001)
  */
 class_precision_parameter(full_hierarchy_trigger_tau_nu_over_tau_k,double,1.e4)
 
-class_string_parameter(interacting_C_ell_file,"/external/neutrinos_collision_terms/Coll_integrals_5_qbins.dat","interacting_C_ell_file")
-class_string_parameter(interacting_alpha_ell_file,"/external/neutrinos_collision_terms/Massless_alpha_l.dat","interacting_alpha_ell_file")
+class_string_parameter(interacting_C_ell_file,"external/neutrinos_collision_terms/Coll_integrals_5_qbins.dat","interacting_C_ell_file")
+class_string_parameter(interacting_alpha_ell_file,"external/neutrinos_collision_terms/Massless_alpha_l.dat","interacting_alpha_ell_file")
 
 /*
  * Primordial parameters

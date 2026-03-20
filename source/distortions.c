@@ -164,11 +164,14 @@ int distortions_constants(struct precision * ppr,
     pow(pba->Omega0_b*pow(pba->h,2.)/0.02225,-2./5.)*
     pow(pba->T_cmb/2.726,1./5.);
 
-  class_sprintf(psd->external_path,"%s%s",ppr->base_path,ppr->sd_external_path);
+  // class_sprintf(psd->external_path,"%s%s",ppr->base_path,ppr->sd_external_path);
 
-  class_sprintf(psd->sd_PCA_file_generator,"%s/%s",psd->external_path,"generate_PCA_files.py");
-  class_sprintf(psd->sd_detector_list_file,"%s/%s",psd->external_path,"detectors_list.dat");
+  // class_sprintf(psd->sd_PCA_file_generator,"%s/%s",psd->external_path,"generate_PCA_files.py");
+  // class_sprintf(psd->sd_detector_list_file,"%s/%s",psd->external_path,"detectors_list.dat");
 
+  class_sprintf(psd->sd_PCA_file_generator,"%s/%s",ppr->sd_external_path,"generate_PCA_files.py");
+  class_sprintf(psd->sd_detector_list_file,"%s/%s",ppr->sd_external_path,"detectors_list.dat");
+  
   return _SUCCESS_;
 }
 
@@ -378,7 +381,8 @@ int distortions_generate_detector(struct precision * ppr,
 
   /** Define local variables*/
   int is_success;
-  char temporary_string[4*_FILENAMESIZE_+_BASEPATHSIZE_+2*_MAX_DETECTOR_NAME_LENGTH_+1024];
+  // char temporary_string[4*_FILENAMESIZE_+_BASEPATHSIZE_+2*_MAX_DETECTOR_NAME_LENGTH_+1024];
+  char temporary_string[4*_FILENAMESIZE_+2*_MAX_DETECTOR_NAME_LENGTH_+1024];
 
 
   /* Test first whether or not python exists*/

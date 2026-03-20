@@ -1600,7 +1600,7 @@ int input_read_precisions(struct file_content * pfc,
   /** The base path is a special precision parameter
        and is assigned here manually to its default value
       It is the path relative to which CLASS will look for all files */
-  strcpy(ppr->base_path,__CLASSDIR__);
+  // strcpy(ppr->base_path,__CLASSDIR__);
 
   /** Read all precision parameters from input (these very concise
       lines parse all precision parameters thanks to the macros
@@ -1610,7 +1610,7 @@ int input_read_precisions(struct file_content * pfc,
 #undef __PARSE_PRECISION_PARAMETER__
 
   /** Now read the relative base path, overwriting possibly the default */
-  class_read_string("base_path",ppr->base_path);
+  // class_read_string("base_path",ppr->base_path);
 
   return _SUCCESS_;
 
